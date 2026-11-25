@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import AppShell from "@/components/AppShell";
+import { PlanProvider } from "@/lib/plan";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it">
       <body>
-        <AppShell>{children}</AppShell>
+        <PlanProvider>
+          <AppShell>{children}</AppShell>
+        </PlanProvider>
       </body>
     </html>
   );

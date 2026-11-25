@@ -2,19 +2,20 @@
 
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
-import { ArrowIcon, CheckIcon, SparkleIcon } from "@/components/Icons";
+import { CheckIcon, SparkleIcon } from "@/components/Icons";
 import { euro, plans } from "@/lib/data";
+import { usePlan, type PlanName } from "@/lib/plan";
 
 export default function PianoPage() {
   const [annual, setAnnual] = useState(false);
-  const [selected, setSelected] = useState("Plus");
+  const { plan: activePlan, setPlan: setActivePlan } = usePlan();
 
   return (
     <div className="stack">
       <PageIntro
         eyebrow="PIANI"
         title="Scegli quanto controllo vuoi"
-        description="Dispositivo e app in abbonamento: manutenzione, riparazione e rigenerazione inclusi nel modello circolare."
+        description="Ogni piano sblocca le funzioni indicate. Le altre restano bloccate e riportano qui."
       />
 
       <section className="billing-switch" role="group" aria-label="Frequenza di fatturazione">
@@ -22,14 +23,19 @@ export default function PianoPage() {
           Mensile
         </button>
         <button type="button" className={annual ? "active" : ""} onClick={() => setAnnual(true)} aria-pressed={annual}>
-          Annuale <span>−20%</span>
+          Annuale
         </button>
       </section>
+      <p className="mini-note">
+        Con il pagamento annuale paghi in un&apos;unica soluzione: il prezzo mensile tra parentesi è il
+        corrispondente mensile.
+      </p>
 
       <div className="plan-list">
         {plans.map((plan) => {
-          const price = annual ? plan.price * 0.8 : plan.price;
-          const isSelected = selected === plan.name;
+          const annualTotal = plan.price * 12 * 0.8;
+          const monthlyEquivalent = annualTotal / 12;
+          const isSelected = activePlan === plan.name;
           return (
             <section className={`plan-tier${isSelected ? " selected" : ""}`} key={plan.name}>
               <div className="tier-head">
@@ -39,8 +45,17 @@ export default function PianoPage() {
                   <p>{plan.tagline}</p>
                 </div>
                 <div className="tier-price">
-                  <b>{euro(price)}</b>
-                  <small>/ mese</small>
+                  {annual ? (
+                    <>
+                      <b>{euro(annualTotal)}</b>
+                      <small>una volta all&apos;anno ({euro(monthlyEquivalent)}/mese)</small>
+                    </>
+                  ) : (
+                    <>
+                      <b>{euro(plan.price)}</b>
+                      <small>/ mese</small>
+                    </>
+                  )}
                 </div>
               </div>
               <ul className="benefit-list">
@@ -54,30 +69,20 @@ export default function PianoPage() {
               <button
                 type="button"
                 className={isSelected ? "toggle-button active" : "toggle-button"}
-                onClick={() => setSelected(plan.name)}
+                onClick={() => setActivePlan(plan.name as PlanName)}
                 aria-pressed={isSelected}
               >
                 {isSelected ? <CheckIcon size={15} /> : null}
-                {isSelected ? "Piano selezionato" : `Scegli ${plan.name}`}
+                {isSelected ? "Piano attivo" : `Attiva ${plan.name}`}
               </button>
             </section>
           );
         })}
       </div>
 
-      <section className="panel soft-panel">
-        <h2>Un dispositivo che resta in circolo</h2>
-        <p className="body-copy">
-          WattlySaver resta proprietario dell&apos;hardware e si occupa di manutenzione,
-          riparazione, aggiornamenti e recupero dei dispositivi. Nessun sensore su ogni
-          elettrodomestico: basta il dispositivo centrale nel quadro.
-        </p>
-        <p className="mini-note">Prezzi e condizioni illustrativi. La bolletta ufficiale resta quella del fornitore.</p>
-      </section>
-
-      <button type="button" className="primary-button" onClick={() => setSelected(selected)}>
-        Continua con {selected} <ArrowIcon size={18} />
-      </button>
+      <p className="feedback">
+        <CheckIcon size={14} /> Piano {activePlan} attivo: le funzioni incluse sono sbloccate.
+      </p>
 
       <p className="disclaimer">Concept · Valori illustrativi, non dati reali</p>
     </div>

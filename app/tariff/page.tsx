@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
+import PlanGuard from "@/components/PlanGuard";
 import { ArrowIcon, CheckIcon, SparkleIcon } from "@/components/Icons";
 import { euro, tariff } from "@/lib/data";
 
-export default function TariffPage() {
+function TariffContent() {
   const [uploaded, setUploaded] = useState("");
   const [analyzed, setAnalyzed] = useState(false);
 
@@ -93,5 +94,13 @@ export default function TariffPage() {
 
       <p className="disclaimer">Concept · Valori illustrativi, non dati reali</p>
     </div>
+  );
+}
+
+export default function TariffPage() {
+  return (
+    <PlanGuard required="Premium">
+      <TariffContent />
+    </PlanGuard>
   );
 }

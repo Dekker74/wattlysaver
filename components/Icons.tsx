@@ -95,3 +95,24 @@ export const SparkleIcon = (p: IconProps) => (
     <path d="M12 3v18M3 12h18M6 6l12 12M18 6 6 18" />
   </Icon>
 );
+
+export const LockIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="5" y="10" width="14" height="11" rx="2.5" />
+    <path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10" />
+  </Icon>
+);
+
+export const EditIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 20h9" />
+    <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4 11.5-11.5Z" />
+  </Icon>
+);
+
+export const TrashIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M4 7h16M9 7V4.5h6V7M6 7l1 13h10l1-13" />
+    <path d="M10 11v5M14 11v5" />
+  </Icon>
+);

@@ -1823,6 +1823,261 @@ input:focus-visible {
   animation: softFloat 3.2s ease-in-out infinite;
 }
 
+/* Chart values and readable axes */
+
+.chart-bars {
+  height: 138px;
+}
+
+.chart-column,
+.hour-column,
+.month-column {
+  gap: 4px;
+}
+
+.chart-track,
+.hour-track,
+.month-track {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.hour-chart,
+.month-chart {
+  height: 148px;
+}
+
+.chart-value,
+.hour-column .hour-value,
+.month-column .month-value {
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.chart-value {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.chart-value.peak {
+  color: var(--primary);
+}
+
+.hour-column .hour-value {
+  font-size: 8px;
+  color: var(--primary);
+}
+
+.month-column .month-value {
+  font-size: 8.5px;
+  color: var(--muted);
+}
+
+.month-column .month-value.current {
+  color: var(--primary);
+}
+
+.week-chart.compact .chart-value {
+  font-size: 8px;
+}
+
+.chart-column[title],
+.hour-column[title],
+.month-column[title] {
+  cursor: default;
+}
+
+/* Budget input and breakdown */
+
+.budget-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.budget-input > span {
+  font-size: 12px;
+}
+
+.budget-input-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  transition: border-color 180ms ease;
+}
+
+.budget-input-field:focus-within {
+  border-color: var(--primary);
+}
+
+.budget-input-field input {
+  width: 92px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.budget-input-field > span {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.category-list .category-amount {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+.category-list b {
+  margin-left: 10px;
+  min-width: 34px;
+  text-align: right;
+}
+
+/* Libretto actions */
+
+.appliance-form h3 {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.appliance-form textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 12px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.form-actions .primary-button {
+  flex: 1;
+  width: auto;
+  padding: 10px 14px;
+}
+
+.appliance-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--primary);
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease, transform 140ms ease;
+}
+
+.icon-button:active {
+  transform: scale(0.96);
+}
+
+.icon-button.danger {
+  border-color: #f0ccd5;
+  color: #b4455c;
+}
+
+/* Family invite */
+
+.invite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  animation: popIn 260ms both;
+}
+
+.invite-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+.invite-form input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 12px;
+}
+
+.invite-form .primary-button {
+  padding: 10px 14px;
+}
+
+/* Plan access */
+
+.service-card.locked {
+  opacity: 0.72;
+  border-style: dashed;
+}
+
+.service-lock {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.locked-panel {
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.locked-panel h2 {
+  font-size: 16px;
+}
+
+.locked-panel p {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.tier-price small {
+  max-width: 150px;
+  white-space: normal;
+  line-height: 1.35;
+}
+
 @media (min-width: 700px) {
   .app-backdrop {
     padding: 28px 16px;

@@ -14,13 +14,13 @@ export const snapshot = {
 };
 
 export const week = [
-  { day: "L", label: "Lunedì", kwh: 5.2 },
-  { day: "M", label: "Martedì", kwh: 6.8 },
-  { day: "G", label: "Mercoledì", kwh: 4.9 },
-  { day: "V", label: "Giovedì", kwh: 7.6 },
-  { day: "S", label: "Venerdì", kwh: 5.4 },
-  { day: "D", label: "Sabato", kwh: 4.7 },
-  { day: "D", label: "Domenica", kwh: 3.8 },
+  { day: "Lu", label: "Lunedì 17 novembre", kwh: 5.2 },
+  { day: "Ma", label: "Martedì 18 novembre", kwh: 6.8 },
+  { day: "Me", label: "Mercoledì 19 novembre", kwh: 4.9 },
+  { day: "Gi", label: "Giovedì 20 novembre", kwh: 7.6 },
+  { day: "Ve", label: "Venerdì 21 novembre", kwh: 5.4 },
+  { day: "Sa", label: "Sabato 22 novembre", kwh: 4.7 },
+  { day: "Do", label: "Domenica 23 novembre", kwh: 3.8 },
 ];
 
 export const hours = [

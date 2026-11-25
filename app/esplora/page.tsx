@@ -9,19 +9,21 @@ import {
   CheckIcon,
   CompassIcon,
   LeafIcon,
+  LockIcon,
   PlanIcon,
   SparkleIcon,
   WalletIcon,
 } from "@/components/Icons";
 import { ecoPrograms } from "@/lib/data";
+import { usePlan } from "@/lib/plan";
 
 const services = [
-  { href: "/wrapped", title: "Wrapped energetico", text: "Il tuo anno in 7 storie, pronto da condividere.", Icon: SparkleIcon, tone: "primary" },
-  { href: "/libretto", title: "Libretto digitale", text: "Apparecchi, documenti, garanzie e scadenze.", Icon: PlanIcon, tone: "mid" },
-  { href: "/checkup", title: "Check-up stagionale", text: "Indizi dai tuoi dati, con tecnico se serve.", Icon: BoltIcon, tone: "soft" },
-  { href: "/famiglia", title: "Budget in famiglia", text: "Ruoli, sfide e obiettivi condivisi.", Icon: WalletIcon, tone: "mid" },
-  { href: "/tariff", title: "Tariff Optimizer", text: "Confronta il contratto con alternative più convenienti.", Icon: CompassIcon, tone: "primary" },
-];
+  { href: "/wrapped", title: "Wrapped energetico", text: "Il tuo anno in 7 storie, pronto da condividere.", Icon: SparkleIcon, tone: "primary", required: "Basic" },
+  { href: "/libretto", title: "Libretto digitale", text: "Apparecchi, documenti, garanzie e scadenze.", Icon: PlanIcon, tone: "mid", required: "Premium" },
+  { href: "/checkup", title: "Check-up stagionale", text: "Indizi dai tuoi dati, con tecnico se serve.", Icon: BoltIcon, tone: "soft", required: "Plus" },
+  { href: "/famiglia", title: "Budget in famiglia", text: "Ruoli, sfide e obiettivi condivisi.", Icon: WalletIcon, tone: "mid", required: "Premium" },
+  { href: "/tariff", title: "Tariff Optimizer", text: "Confronta il contratto con alternative più convenienti.", Icon: CompassIcon, tone: "primary", required: "Premium" },
+] as const;
 
 const steps = [
   { title: "Misura", text: "Il dispositivo nel quadro legge corrente e tensione, senza tagliare cavi." },
@@ -32,6 +34,7 @@ const steps = [
 
 export default function EsploraPage() {
   const [active, setActive] = useState<string[]>([]);
+  const { canAccess } = usePlan();
 
   const toggle = (id: string) =>
     setActive((current) =>
@@ -51,16 +54,28 @@ export default function EsploraPage() {
       />
 
       <div className="service-grid">
-        {services.map(({ href, title, text, Icon, tone }) => (
-          <Link href={href} className={`service-card ${tone}`} key={href}>
-            <span className="service-icon">
-              <Icon size={19} />
-            </span>
-            <b>{title}</b>
-            <span>{text}</span>
-            <ArrowIcon size={15} className="service-arrow" />
-          </Link>
-        ))}
+        {services.map(({ href, title, text, Icon, tone, required }) => {
+          const locked = !canAccess(required);
+          return (
+            <Link
+              href={locked ? "/piano" : href}
+              className={`service-card ${tone}${locked ? " locked" : ""}`}
+              key={href}
+              aria-label={locked ? `${title}: richiede il piano ${required}` : title}
+            >
+              <span className="service-icon">
+                <Icon size={19} />
+              </span>
+              <b>{title}</b>
+              <span>{text}</span>
+              {locked ? (
+                <span className="service-lock"><LockIcon size={13} /> {required}</span>
+              ) : (
+                <ArrowIcon size={15} className="service-arrow" />
+              )}
+            </Link>
+          );
+        })}
       </div>
 
       <section className="panel">

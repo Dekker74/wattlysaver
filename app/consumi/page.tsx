@@ -45,13 +45,25 @@ export default function ConsumiPage() {
           </div>
           <span className="pill">kWh</span>
         </div>
-        <div className="hour-chart" role="img" aria-label="Consumo energetico nelle 24 ore">
+        <div className="hour-chart" role="img" aria-label="Energia consumata ogni 2 ore, valori in kWh">
           {hours.map((entry) => (
-            <div className="hour-column" key={entry.hour}>
-              <div className="hour-bar" style={{ height: `${(entry.kwh / maxHour) * 100}%` }} />
+            <div
+              className="hour-column"
+              key={entry.hour}
+              title={`Ore ${entry.hour}:00 – ${entry.hour}: ${decimal(entry.kwh)} kWh`}
+              aria-label={`Ore ${entry.hour}: ${decimal(entry.kwh)} kWh`}
+            >
+              <span className="hour-value">{decimal(entry.kwh)}</span>
+              <div className="hour-track">
+                <div className="hour-bar" style={{ height: `${(entry.kwh / maxHour) * 100}%` }} />
+              </div>
               <span>{entry.hour}</span>
             </div>
           ))}
+        </div>
+        <div className="chart-caption">
+          <span>Valori in kWh</span>
+          <span>Ogni 2 ore · 00–24</span>
         </div>
         <span className="sr-only">
           {hours.map((h) => `${h.hour}: ${decimal(h.kwh)} kWh`).join(", ")}

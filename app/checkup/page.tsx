@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
+import PlanGuard from "@/components/PlanGuard";
 import { BoltIcon, CheckIcon, ClockIcon } from "@/components/Icons";
 import { checkupClues } from "@/lib/data";
 
-export default function CheckupPage() {
+function CheckupContent() {
   const [season, setSeason] = useState<"estate" | "inverno">("inverno");
   const [booked, setBooked] = useState(false);
   const clues = checkupClues[season];
@@ -81,5 +82,13 @@ export default function CheckupPage() {
 
       <p className="disclaimer">Concept · Valori illustrativi, non dati reali</p>
     </div>
+  );
+}
+
+export default function CheckupPage() {
+  return (
+    <PlanGuard required="Plus">
+      <CheckupContent />
+    </PlanGuard>
   );
 }

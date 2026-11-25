@@ -2,34 +2,70 @@
 
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
-import { CheckIcon, ClockIcon, PlanIcon } from "@/components/Icons";
+import PlanGuard from "@/components/PlanGuard";
+import { CheckIcon, ClockIcon, EditIcon, PlanIcon, TrashIcon } from "@/components/Icons";
 import { household, reminders } from "@/lib/data";
 
 type Appliance = (typeof household)[number];
 
-export default function LibrettoPage() {
+const emptyForm = { name: "", brand: "", model: "", label: "A", note: "" };
+
+function LibrettoContent() {
   const [items, setItems] = useState<Appliance[]>(household);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", brand: "", model: "", label: "A" });
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [form, setForm] = useState(emptyForm);
 
-  const add = (event: React.FormEvent) => {
+  const closeForm = () => {
+    setOpen(false);
+    setEditingIndex(null);
+    setForm(emptyForm);
+  };
+
+  const openAdd = () => {
+    setEditingIndex(null);
+    setForm(emptyForm);
+    setOpen(true);
+  };
+
+  const openEdit = (index: number) => {
+    const item = items[index];
+    setEditingIndex(index);
+    setForm({
+      name: item.name,
+      brand: item.brand,
+      model: item.model,
+      label: item.label,
+      note: item.note,
+    });
+    setOpen(true);
+  };
+
+  const save = (event: React.FormEvent) => {
     event.preventDefault();
     if (!form.name.trim()) return;
-    setItems((current) => [
-      ...current,
-      {
-        name: form.name.trim(),
-        brand: form.brand.trim() || "Da inserire",
-        model: form.model.trim() || "Da inserire",
-        label: form.label,
-        warranty: "Da caricare",
-        service: "Da pianificare",
-        kwh: 0,
-        note: "Documenti e manuali da caricare.",
-      },
-    ]);
-    setForm({ name: "", brand: "", model: "", label: "A" });
-    setOpen(false);
+    const current = editingIndex === null ? null : items[editingIndex];
+    const updated: Appliance = {
+      name: form.name.trim(),
+      brand: form.brand.trim() || "Da inserire",
+      model: form.model.trim() || "Da inserire",
+      label: form.label,
+      warranty: current?.warranty ?? "Da caricare",
+      service: current?.service ?? "Da pianificare",
+      kwh: current?.kwh ?? 0,
+      note: form.note.trim() || "Documenti e manuali da caricare.",
+    };
+    setItems((list) =>
+      editingIndex === null
+        ? [...list, updated]
+        : list.map((item, index) => (index === editingIndex ? updated : item))
+    );
+    closeForm();
+  };
+
+  const remove = (index: number) => {
+    setItems((list) => list.filter((_, i) => i !== index));
+    if (editingIndex === index) closeForm();
   };
 
   return (
@@ -46,13 +82,14 @@ export default function LibrettoPage() {
             <h2>I tuoi apparecchi</h2>
             <p>{items.length} schede · consumi stimati via NILM</p>
           </div>
-          <button type="button" className="toggle-button" onClick={() => setOpen((value) => !value)}>
+          <button type="button" className="toggle-button" onClick={open ? closeForm : openAdd}>
             {open ? "Chiudi" : "+ Aggiungi"}
           </button>
         </div>
 
         {open && (
-          <form className="appliance-form" onSubmit={add}>
+          <form className="appliance-form" onSubmit={save}>
+            <h3>{editingIndex === null ? "Nuovo apparecchio" : "Modifica apparecchio"}</h3>
             <label>
               Apparecchio
               <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Es. Lavatrice" />
@@ -75,13 +112,29 @@ export default function LibrettoPage() {
                 ))}
               </select>
             </label>
-            <button type="submit" className="primary-button">Salva scheda</button>
+            <label>
+              Note personali
+              <textarea
+                rows={2}
+                value={form.note}
+                onChange={(e) => setForm({ ...form, note: e.target.value })}
+                placeholder="Es. filtro da controllare ogni 3 mesi"
+              />
+            </label>
+            <div className="form-actions">
+              <button type="submit" className="primary-button">
+                {editingIndex === null ? "Salva scheda" : "Salva modifiche"}
+              </button>
+              <button type="button" className="ghost-button" onClick={closeForm}>
+                Annulla
+              </button>
+            </div>
           </form>
         )}
 
         <div className="appliance-list">
-          {items.map((item) => (
-            <article className="appliance-card" key={`${item.name}-${item.model}`}>
+          {items.map((item, index) => (
+            <article className="appliance-card" key={`${item.name}-${index}`}>
               <div className="appliance-top">
                 <span className="appliance-icon"><PlanIcon size={18} /></span>
                 <div>
@@ -98,8 +151,19 @@ export default function LibrettoPage() {
               <div className="appliance-foot">
                 <ClockIcon size={14} /> Prossimo intervento: {item.service}
               </div>
+              <div className="appliance-actions">
+                <button type="button" className="icon-button" onClick={() => openEdit(index)} aria-label={`Modifica ${item.name}`}>
+                  <EditIcon size={14} /> Modifica
+                </button>
+                <button type="button" className="icon-button danger" onClick={() => remove(index)} aria-label={`Rimuovi ${item.name}`}>
+                  <TrashIcon size={14} /> Rimuovi
+                </button>
+              </div>
             </article>
           ))}
+          {items.length === 0 && (
+            <p className="mini-note">Nessuna scheda: aggiungi il tuo primo apparecchio.</p>
+          )}
         </div>
       </section>
 
@@ -138,5 +202,13 @@ export default function LibrettoPage() {
 
       <p className="disclaimer">Concept · Valori illustrativi, non dati reali</p>
     </div>
+  );
+}
+
+export default function LibrettoPage() {
+  return (
+    <PlanGuard required="Premium">
+      <LibrettoContent />
+    </PlanGuard>
   );
 }

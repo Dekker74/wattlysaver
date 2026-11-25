@@ -3,17 +3,16 @@
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
 import { CheckIcon, SparkleIcon } from "@/components/Icons";
-import { euro, months, snapshot, user } from "@/lib/data";
+import { devices, euro, months, snapshot, user } from "@/lib/data";
 
-const categories = [
-  { name: "Casa", percent: 45, tone: "primary" },
-  { name: "Cucina", percent: 30, tone: "mid" },
-  { name: "Clima", percent: 25, tone: "soft" },
-];
+const tones = ["primary", "mid", "soft", "primary"];
 
 export default function BudgetPage() {
-  const [budget, setBudget] = useState(snapshot.monthBudget);
+  const [budgetInput, setBudgetInput] = useState(String(snapshot.monthBudget));
   const [contract, setContract] = useState("");
+  const parsedBudget = Number(budgetInput);
+  const budget =
+    Number.isFinite(parsedBudget) && parsedBudget > 0 ? parsedBudget : snapshot.monthBudget;
   const used = (snapshot.monthSpent / budget) * 100;
   const margin = budget - snapshot.monthForecast;
   const maxMonth = Math.max(...months.map((m) => m.value));
@@ -63,24 +62,26 @@ export default function BudgetPage() {
         <div className="panel-head">
           <div>
             <h2>Il tuo limite mensile</h2>
-            <p>Trascina per adattarlo alle tue esigenze</p>
+            <p>Scrivi il budget che vuoi rispettare</p>
           </div>
           <span className="pill">{euro(budget)}</span>
         </div>
-        <input
-          className="budget-slider"
-          type="range"
-          min={50}
-          max={120}
-          step={5}
-          value={budget}
-          onChange={(event) => setBudget(Number(event.target.value))}
-          aria-label="Budget mensile in euro"
-        />
-        <div className="slider-scale">
-          <span>50 €</span>
-          <span>120 €</span>
-        </div>
+        <label className="budget-input">
+          <span>Importo mensile</span>
+          <div className="budget-input-field">
+            <input
+              type="number"
+              min={1}
+              step={1}
+              inputMode="decimal"
+              value={budgetInput}
+              onChange={(event) => setBudgetInput(event.target.value)}
+              aria-label="Budget mensile in euro"
+            />
+            <span>€</span>
+          </div>
+        </label>
+        <p className="mini-note">Il limite si aggiorna subito in tutte le previsioni di questa pagina.</p>
       </section>
 
       <section className="panel">
@@ -106,15 +107,16 @@ export default function BudgetPage() {
         <div className="panel-head">
           <div>
             <h2>Dove va l&apos;energia</h2>
-            <p>Ripartizione di novembre</p>
+            <p>Stima di novembre per apparecchio</p>
           </div>
         </div>
         <ul className="category-list">
-          {categories.map((category) => (
-            <li key={category.name}>
-              <span className={`dot ${category.tone}`} />
-              <span>{category.name}</span>
-              <b>{category.percent}%</b>
+          {devices.map((device, index) => (
+            <li key={device.name}>
+              <span className={`dot ${tones[index % tones.length]}`} />
+              <span className="category-name">{device.name}</span>
+              <span className="category-amount">{euro((budget * device.percent) / 100)}</span>
+              <b>{device.percent}%</b>
             </li>
           ))}
         </ul>
@@ -127,16 +129,30 @@ export default function BudgetPage() {
             <p>Spesa energetica in euro</p>
           </div>
         </div>
-        <div className="month-chart" role="img" aria-label="Spesa energetica degli ultimi sei mesi">
+        <div className="month-chart" role="img" aria-label="Spesa energetica degli ultimi sei mesi, valori in euro">
           {months.map((entry) => (
-            <div className="month-column" key={entry.month}>
-              <div
-                className={`month-bar${entry.month === "Nov" ? " current" : ""}`}
-                style={{ height: `${(entry.value / maxMonth) * 100}%` }}
-              />
+            <div
+              className="month-column"
+              key={entry.month}
+              title={`${entry.month}: ${euro(entry.value)}`}
+              aria-label={`${entry.month}: ${euro(entry.value)}`}
+            >
+              <span className={`month-value${entry.month === "Nov" ? " current" : ""}`}>
+                {Math.round(entry.value)} €
+              </span>
+              <div className="month-track">
+                <div
+                  className={`month-bar${entry.month === "Nov" ? " current" : ""}`}
+                  style={{ height: `${(entry.value / maxMonth) * 100}%` }}
+                />
+              </div>
               <span>{entry.month}</span>
             </div>
           ))}
+        </div>
+        <div className="chart-caption">
+          <span>Valori in euro</span>
+          <span>Giu – Nov</span>
         </div>
       </section>
 
