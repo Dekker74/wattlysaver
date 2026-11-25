@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
-import { SparkleIcon } from "@/components/Icons";
+import { CheckIcon, SparkleIcon } from "@/components/Icons";
 import { euro, months, snapshot, user } from "@/lib/data";
 
 const categories = [
@@ -13,6 +13,7 @@ const categories = [
 
 export default function BudgetPage() {
   const [budget, setBudget] = useState(snapshot.monthBudget);
+  const [contract, setContract] = useState("");
   const used = (snapshot.monthSpent / budget) * 100;
   const margin = budget - snapshot.monthForecast;
   const maxMonth = Math.max(...months.map((m) => m.value));
@@ -80,6 +81,25 @@ export default function BudgetPage() {
           <span>50 €</span>
           <span>120 €</span>
         </div>
+      </section>
+
+      <section className="panel">
+        <div className="panel-head">
+          <div>
+            <h2>Contratto energetico</h2>
+            <p>Caricalo per una stima più accurata</p>
+          </div>
+        </div>
+        <label className="upload-box compact">
+          <input
+            type="file"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={(event) => setContract(event.target.files?.[0]?.name ?? "")}
+          />
+          <span>{contract || "Carica bolletta o contratto"}</span>
+          <small>Prezzo energia, fasce, oneri e quote fisse</small>
+        </label>
+        {contract && <p className="feedback"><CheckIcon size={14} /> Contratto pronto per l&apos;analisi.</p>}
       </section>
 
       <section className="panel">

@@ -84,6 +84,100 @@ export const months = [
   { month: "Nov", value: 42.6 },
 ];
 
+export const weeklyPlan = [
+  { title: "Sposta i cicli", text: "Lavatrice e lavastoviglie dopo le 22:00, dove la tariffa è più conveniente.", tag: "Fasce orarie" },
+  { title: "Usa il programma ECO", text: "Il carico ridotto mantiene il comfort e taglia fino al 18% dei consumi.", tag: "Elettrodomestici" },
+  { title: "Evita i picchi", text: "Non accendere forno e climatizzatore insieme nelle ore di punta.", tag: "Potenza" },
+];
+
+export const yearWrap = {
+  year: 2026,
+  kwh: 712,
+  kwhChange: -6,
+  bestMonth: "Giugno",
+  bestMonthKwh: 49,
+  worstMonth: "Gennaio",
+  worstMonthKwh: 78,
+  topDevice: "Climatizzatore",
+  topDeviceShare: 28,
+  improvedDevice: "Lavastoviglie",
+  improvedPercent: 19,
+  savedEuro: 96,
+  savedKwh: 385,
+  savedCo2: 143,
+  title: "Maestri del programma ECO",
+  emissionFactor: 0.371,
+  emissionSource: "ISPRA, Rapporto 418/2025 — fattore di emissione elettrica, dati 2024",
+  emissionUrl: "https://emissioni.sina.isprambiente.it/wp-content/uploads/2025/09/Rapporto_418-2025_Decarbonizzazione.pdf",
+};
+
+export const household = [
+  { name: "Climatizzatore", brand: "Samsung", model: "WindFree AR12", label: "A++", warranty: "14/03/2027", service: "Maggio 2027", kwh: 182, note: "Filtro da controllare ogni 3 mesi." },
+  { name: "Lavastoviglie", brand: "Bosch", model: "Serie 4 SMS", label: "A", warranty: "02/11/2028", service: "Novembre 2026", kwh: 146, note: "Usa sempre il programma ECO." },
+  { name: "Frigorifero", brand: "LG", model: "DoorCooling GA-B509", label: "A+", warranty: "21/06/2029", service: "Giugno 2027", kwh: 121, note: "Documenti e scontrino in archivio." },
+];
+
+export const reminders = [
+  { title: "Tagliando climatizzatore", due: "12/05/2027", type: "Manutenzione" },
+  { title: "Garanzia lavastoviglie", due: "02/11/2028", type: "Garanzia" },
+  { title: "Verifica impianto", due: "31/12/2026", type: "Obbligatorio" },
+];
+
+export const checkupClues = {
+  estate: [
+    { title: "Clima sotto osservazione", text: "I consumi del climatizzatore sono cresciuti rispetto all'estate scorsa, ma le temperature sono state più alte. Da approfondire, non una diagnosi." },
+    { title: "Potenza impegnata", text: "I picchi serali restano sotto la soglia contrattuale. La potenza impegnata sembra adeguata alle abitudini attuali." },
+    { title: "Standby notturno", text: "Tra le 23:00 e le 07:00 il consumo base è leggermente superiore allo storico. Potrebbero esserci carichi invisibili." },
+    { title: "Scadenze del libretto", text: "La verifica dell'impianto è in scadenza a dicembre. Consulta il Libretto digitale per i documenti." },
+  ],
+  inverno: [
+    { title: "Riscaldamento e consumi", text: "Il consumo di novembre è in linea con lo scorso anno dopo la normalizzazione meteo. Nessuna anomalia evidente." },
+    { title: "Elettrodomestici datati", text: "Il frigorifero mostra un assorbimento costante leggermente superiore alla media della categoria." },
+    { title: "Fasce orarie", text: "Spostare i cicli lunghi nelle ore serali potrebbe ridurre la spesa, se previsto dal contratto." },
+    { title: "Scadenze del libretto", text: "La manutenzione della caldaia è in programma a gennaio: il promemoria è già attivo." },
+  ],
+};
+
+export const familyRoles = [
+  { role: "Titolare", description: "Controllo completo su contratto, budget, inviti e privacy.", count: 1, tone: "primary" },
+  { role: "Membro adulto", description: "Vede i consumi, riceve notifiche e conferma gli eventi Smart Learning.", count: 2, tone: "mid" },
+  { role: "Membro giovane", description: "Sfide e obiettivi, senza accesso ai dati finanziari.", count: 1, tone: "soft" },
+  { role: "Ospite", description: "Accesso a tempo determinato per coinquilini e affitti brevi.", count: 0, tone: "soft" },
+];
+
+export const tariff = {
+  currentEuro: 1080,
+  alternativeEuro: 900,
+  savingEuro: 180,
+  factors: [
+    "Contratto attuale e componenti tariffarie",
+    "Consumi complessivi e fasce orarie di utilizzo",
+    "Prezzo energia, oneri e quote fisse",
+    "Abitudini della famiglia e potenza impegnata",
+  ],
+};
+
+export const plans = [
+  {
+    name: "Basic",
+    price: 2.9,
+    tagline: "L'essenziale per partire",
+    features: ["Consumi per elettrodomestico", "Piano personalizzato dal budget", "Carica il contratto per una stima accurata", "Wrapped energetico"],
+  },
+  {
+    name: "Plus",
+    price: 4.9,
+    tagline: "Il controllo che cresce",
+    features: ["Tutto del piano Basic", "Check-up stagionale digitale", "Prenotazione tecnici convenzionati", "Suggerimenti avanzati"],
+  },
+  {
+    name: "Premium",
+    price: 7.9,
+    tagline: "La casa, tutta sotto controllo",
+    features: ["Tutto del piano Plus", "Budget condiviso in famiglia", "Libretto digitale della casa", "WattlySaver Tariff Optimizer"],
+  },
+];
+
 export const euro = (value: number) =>
   value.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
 

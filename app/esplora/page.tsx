@@ -1,9 +1,34 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import PageIntro from "@/components/PageIntro";
-import { CheckIcon, LeafIcon, SparkleIcon } from "@/components/Icons";
+import {
+  ArrowIcon,
+  BoltIcon,
+  CheckIcon,
+  CompassIcon,
+  LeafIcon,
+  PlanIcon,
+  SparkleIcon,
+  WalletIcon,
+} from "@/components/Icons";
 import { ecoPrograms } from "@/lib/data";
+
+const services = [
+  { href: "/wrapped", title: "Wrapped energetico", text: "Il tuo anno in 7 storie, pronto da condividere.", Icon: SparkleIcon, tone: "primary" },
+  { href: "/libretto", title: "Libretto digitale", text: "Apparecchi, documenti, garanzie e scadenze.", Icon: PlanIcon, tone: "mid" },
+  { href: "/checkup", title: "Check-up stagionale", text: "Indizi dai tuoi dati, con tecnico se serve.", Icon: BoltIcon, tone: "soft" },
+  { href: "/famiglia", title: "Budget in famiglia", text: "Ruoli, sfide e obiettivi condivisi.", Icon: WalletIcon, tone: "mid" },
+  { href: "/tariff", title: "Tariff Optimizer", text: "Confronta il contratto con alternative più convenienti.", Icon: CompassIcon, tone: "primary" },
+];
+
+const steps = [
+  { title: "Misura", text: "Il dispositivo nel quadro legge corrente e tensione, senza tagliare cavi." },
+  { title: "Interpreta", text: "NILM e Smart Learning stimano gli apparecchi e chiedono conferma quando serve." },
+  { title: "Trasforma", text: "Consumi, tariffe e budget diventano una previsione di spesa comprensibile." },
+  { title: "Suggerisce", text: "Piani d'uso ECO e notifiche: meno sprechi, senza rinunciare al comfort." },
+];
 
 export default function EsploraPage() {
   const [active, setActive] = useState<string[]>([]);
@@ -21,9 +46,47 @@ export default function EsploraPage() {
     <div className="stack">
       <PageIntro
         eyebrow="ESPLORA"
-        title="Un piccolo gesto, ogni giorno"
-        description="Programmi intelligenti che riducono i consumi senza cambiare le tue abitudini."
+        title="Servizi per la tua casa"
+        description="Tutto ciò che WattlySaver fa con i dati che già raccoglie."
       />
+
+      <div className="service-grid">
+        {services.map(({ href, title, text, Icon, tone }) => (
+          <Link href={href} className={`service-card ${tone}`} key={href}>
+            <span className="service-icon">
+              <Icon size={19} />
+            </span>
+            <b>{title}</b>
+            <span>{text}</span>
+            <ArrowIcon size={15} className="service-arrow" />
+          </Link>
+        ))}
+      </div>
+
+      <section className="panel">
+        <div className="panel-head">
+          <div>
+            <h2>Come funziona</h2>
+            <p>Dal quadro elettrico all'app</p>
+          </div>
+          <span className="pill">4 passi</span>
+        </div>
+        <ol className="step-list">
+          {steps.map((step, index) => (
+            <li key={step.title}>
+              <span className="step-number">{index + 1}</span>
+              <div>
+                <b>{step.title}</b>
+                <small>{step.text}</small>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p className="mini-note">
+          I dati sono cifrati e inviati al cloud solo quando servono. Le stime NILM non sostituiscono
+          le misure dirette e i consumi non identificati restano visibili come tali.
+        </p>
+      </section>
 
       <section className="eco-hero">
         <span className="tip-icon large">

@@ -8,7 +8,7 @@ import {
   LeafIcon,
   SparkleIcon,
 } from "@/components/Icons";
-import { decimal, euro, snapshot, user } from "@/lib/data";
+import { decimal, euro, snapshot, user, weeklyPlan } from "@/lib/data";
 
 export default function HomePage() {
   const used = (snapshot.monthSpent / snapshot.monthBudget) * 100;
@@ -105,6 +105,39 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      <section className="panel">
+        <div className="panel-head">
+          <div>
+            <h2>Il tuo piano della settimana</h2>
+            <p>Suggerimenti dal tuo budget</p>
+          </div>
+          <Link href="/budget" className="text-link">
+            Budget <ArrowIcon size={15} />
+          </Link>
+        </div>
+        <ul className="plan-list-small">
+          {weeklyPlan.map((item) => (
+            <li key={item.title}>
+              <span className="plan-dot" />
+              <div>
+                <b>{item.title}</b>
+                <small>{item.text}</small>
+              </div>
+              <span className="plan-tag">{item.tag}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <Link href="/wrapped" className="wrapped-teaser">
+        <span className="tip-icon"><SparkleIcon size={20} /></span>
+        <span>
+          <b>Il tuo Wrapped energetico è pronto</b>
+          <small>7 storie, 1 anno di energia</small>
+        </span>
+        <ArrowIcon size={18} />
+      </Link>
 
       <p className="disclaimer">Concept · Valori illustrativi, non dati reali</p>
     </div>
