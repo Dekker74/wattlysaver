@@ -33,7 +33,7 @@ export default function PianoPage() {
 
       <div className="plan-list">
         {plans.map((plan) => {
-          const annualTotal = plan.price * 12 * 0.8;
+          const annualTotal = plan.annualPrice;
           const monthlyEquivalent = annualTotal / 12;
           const isSelected = activePlan === plan.name;
           return (

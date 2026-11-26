@@ -15,7 +15,7 @@ App mobile-first per il monitoraggio intelligente dell'energia: consumi in tempo
 - **Check-up stagionale** — report pre-inverno/pre-estate con 3–4 indizi normalizzati per meteo e prenotazione tecnici partner selezionati.
 - **Budget condiviso in famiglia** — ruoli (titolare, adulto, giovane, ospite), sfide, notifiche differenziate e conferme Smart Learning, con aggregazione per apparecchio/fascia oraria.
 - **Tariff Optimizer** — confronto tra spesa annuale attuale e alternativa stimata, analisi di contratto, fasce orarie e abitudini; esempio illustrativo, non previsione reale.
-- **Piano** — Basic, Plus e Premium con switch mensile/annuale (−20%).
+- **Piano** — Basic, Plus e Premium con switch mensile/annuale. Prezzi annuali in un'unica soluzione: 29 € (2,42 €/mese), 49 € (4,08 €/mese), 79 € (6,58 €/mese). Il piano selezionato sblocca solo le funzioni incluse.
 
 ## Animazioni
 

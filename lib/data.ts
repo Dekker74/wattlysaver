@@ -161,18 +161,21 @@ export const plans = [
   {
     name: "Basic",
     price: 2.9,
+    annualPrice: 29,
     tagline: "L'essenziale per partire",
     features: ["Consumi per elettrodomestico", "Piano personalizzato dal budget", "Carica il contratto per una stima accurata", "Wrapped energetico"],
   },
   {
     name: "Plus",
     price: 4.9,
+    annualPrice: 49,
     tagline: "Il controllo che cresce",
     features: ["Tutto del piano Basic", "Check-up stagionale digitale", "Prenotazione tecnici convenzionati", "Suggerimenti avanzati"],
   },
   {
     name: "Premium",
     price: 7.9,
+    annualPrice: 79,
     tagline: "La casa, tutta sotto controllo",
     features: ["Tutto del piano Plus", "Budget condiviso in famiglia", "Libretto digitale della casa", "WattlySaver Tariff Optimizer"],
   },
